@@ -1,0 +1,81 @@
+ACCEDER A MYSQL DESDE LA TERMINAL
+
+cd/ruta-a-directorio/mysql/bin
+
+mysql -u nombre_usuario -p
+ENTER PASSWORD: escribir_password_para_usuario
+
+SHOW DATABASES;
+USE nombre_bd;
+SHOW TABLES;
+DESCRIBE nombre_tabla;
+SELECT * FROM nombre_tabla;
+
+
+
+VARCHAR se adapta a la cantidad de caracteres ocupados si no sobrepasa el maximo
+TEXT es para campos con mas de 255 caracteres
+DEFAULT es para poner valore por defecto si el usuario no pone nada
+TEXT NO ADMITE DEFAULT
+DECIMAL(2,1) decimal de dos numeros y uno es decimal
+
+ENUM(valor1,valor2,...) es un tipo de datos de lista
+Se usa solo si hay pocos valores de la lista y que NO va a crecer, sino directamente hago BD relacional
+
+PARA BORRAR UNA BD
+DROP DATABASE IF EXISTS metflix;
+
+PARA HACER RELACIONES SE USA ESTO:
+FOREIGN KEY(campoDeLaTablaActual) REFERENCES TablaReferencia(CampoReferencia)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+
+El on delete y on update es el comportamiento cuando borre o actualice
+RESTRICT me restringe actualizar o eliminar un dato que este relacionado en otra tabla, hasta que no este relacionado
+CASCADE este ya lo conozco, borra y actualiza todos los datos en los campos de las tablas relacionadas tambien
+
+BUSQUEDAS TIPO FULL-TEXT
+Es para hacer busquedas para hacer se usa la siguiente line en la tabla
+FULLTEXT KEY nombreBuscador(campo en que buscar 1, campo en que buscar 2, campo en que buscar 3 ...)
+PARA USAR EL FULLTEXT KEY EN UNA CONSULTA SE USA MATCH Y AGAINST:
+    SELECT * FROM tabla 
+        WHERE MATCH (campo1, campo2, campo3 ...) AGAINST ('valorABsucar' IN BOOLEAN MODE)
+
+PARA ENCRIPTAR UNO DE LOS METODOS ES MD5, SE LE TIENE QUE PASAR UN CHAR Y SE USA ASI: MD5(CHAR)
+
+Otra forma de hacer el INSERT y el UPDATE es:
+    INSERTO INTO tabla SET campo = valor, campo2 = valor2 . . .
+    UPDATE tabla SET campo = valor, campo2 = valor2... WHERE id = campo
+
+
+CONSULTAS MULTIPLES
+Se usan para hacer consultas de varias tablas, para hacerlo se usa INNER JOIN 
+EJEMPLOS:
+    
+    SELECT * FROM tabla1 AS t1
+        INNER JOIN tabla2 AS t2 
+            ON t1.claveForanea = t2.ClavePrincipal
+
+    
+    SELECT t1.campo1, t1.campo2, t1.campo3 ..., t2.campo1, t2.campo2 ...
+        FROM tabla1 AS t1
+            INNER JOIN tabla2 AS t2
+                ON t1.claveForanea = t2.ClavePrincipal
+                    WHERE t1.campo1 = 'un valor'
+                        ORDER BY t1.campo3 DESC
+
+
+
+INTEGRIDAD REFERENCIAL se refiere a mantener la integridad de la BD al eliminaro actualizar datos que esten
+relacionados en otras tablas
+
+ESTA LINEA ES PARA VER MEJOR LOS ERRORES DE CONEXION O CONSULTAS CUANDO HAYA UNO
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+/* salvar status 
+    Solo para MySQL, si comparamos con word, guardar como es un INSERT y guardar es REPLACE, ya que sabe donde
+    guardar lo cambios porque ya se creo el archivo
+    LO QUE HACE ES: le pasas un id y los valores, busca el id si lo encuentra cambia TODOS los campos por los que
+    mandaste osea un update, SI NO encuentra el id CREA el nuevo registro osea un insert (SIEMPRE HAY QUE
+    ESPECIFICAR TODOS LOS CAMPOS SINO LO GUARDA COMO NULL */
+    REPLACE INTO status (id_status, status) VALUES (0, 'Otro Status');
+    REPLACE status SET id_status = 0, status = 'Otro Status';

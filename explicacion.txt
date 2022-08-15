@@ -1,0 +1,387 @@
+CUANDO USAMOS COMILLAS SIMPLES '' PHP NO ES CAPAZ DE LEER UNA VARIABLE DENTRO
+SI USAMOS LAS COMILLAS DOBLES "" AHI SI PUEDE LEER LAS VARIABLES DENTRO
+
+
+POO EN PHP
+
+La POO es un paradigma de programacion que utiliza objetos e interacciones en el diseño de un sistema.
+Compuesta por varios elementos y caracteristicas.
+
+Los elemenots de la POO:
+    *CLASE
+    *OBJETO
+    *ATRIBUTO
+    *METODO
+
+CLASE
+Es un modelo que se utiliza para crear objetos que comparten un mismo comportamiento, estado e identidad.
+
+OBJETO
+Es una entidad que tiene Metodos(comportamiento a cual responde) y Atributos con valores concretos (estados) y
+propiedades (identidad).
+
+CARACTERISTICAS DE LA POO
+ABSTRACCION
+Aislacion de un elemento de su contexto. Define las caracteristicas esenciales de un objeto.
+Basicamente cuando pongo abstracta a una clase el metodo que herede lo voy a definir porque lo hace de diferente forma
+Un animal de mar no respira igual que un humano por ejemplo.
+
+ENCAPSULAMIENTO
+Reune el mismo nivel de abstraccion, a todos los elementos que puedan considerarse pertenecientes a una misma
+entidad.
+Decimos que el encapsulamiento en la programación orientada a objetos es cuando limitamos el acceso o 
+damos un acceso restringido de una propiedad a los elementos que necesita un miembro y no a ninguno más. 
+
+MODULARIDAD
+Caracteristica que permite dividir un aplicacion en varias partes mas pequeñas, independientes una de otras.
+
+AISLAMIENTO
+Los objetos estan aislados del exterior, protegiendo sus propiedades para no ser modificadas por aquellos
+que no tengan derecho a acceder a las mismas.
+
+POLIMORFISMO
+Es la capacidad que da a diferentes objetos, la posibilidad de contar con metodos y atributos de igual nombre
+sin que los de un objeto interfieran con otro.
+Un ejemplo es cuando hago una funcion en una clase PADRE y en una HIJA REDEFINO ALGUN METODO
+
+HERENCIA
+Es la relacion que existe entre dos o mas clases, donde una es la principal(madre) y otras son las secundarias
+y dependen(heredan) de ellas (Clases hijas), donde a la vez, los objetos heredan las caracteristicas de los 
+objetos de los cuales heredan.
+
+
+POO EN PHP
+Definicion de clase
+
+(YA NO CIERRO ETIQUETA PHP, PORQUE ES BUENA PRACTICA HACER O PHP PURO O HTML PURO NO JUNTARLOS
+ENTONCES SI HAGO PHP PURO NO HACE FALTA CERRAR LA ETIQUETA)
+DENTRO DE CLASES EN PHP SI SE USA var
+
+<?php
+class NombreDeMiClase {
+    var $un_atributo;
+    function un_metodo(){
+
+    }
+}
+
+Para inicializar objeto:
+$objeto = new NombreDeMiClase();
+
+PARA USAR HERENCIA SE USA extends
+
+class NombreDeMiClaseMadre {
+
+}
+
+class NombreDeMiClaseHija extends NombreDeMiClaseMadre {
+    HEREDA TODOS LOS ATRIBUTOS Y METODOS DE LA CLASE MADRE
+}
+
+
+DEFINICION DE CLASE ABSTRACTA
+Son aquellas que no necesitan ser instanciadas pero sin embargo, seran heredadas en algun momento. Su finalidad,
+es la de declarar clases genericas que necesitan ser declaradas pero a las cuales, no se puede otorgar una 
+definicion precisa. Tambien se pueden declarar metodos abstractos.
+
+abstract class NombreDeMiClaseAbstracta {
+    var $un_atributo_abstracto;
+    function un_metodo_abstracto();
+    (LA FUNCION NO LLEVA LLAVE, NO TIENE CUERPO, EL CUERPO SE HACE EN LA CLASE QUE HEREDE ESTA CLASE ABSTRACTA)
+}
+
+
+CLASES FINALES. NO SE PUEDEN HEREDAR
+final class NombreDeClaseFinal {
+    var $un_atributo_final;
+    function un_metodo_final() {
+
+    }
+}
+
+
+NIVELES DE ACCESO para atributos y metodos
+    PUBLICO: todos pueden entrar
+    PRIVADO: solo se puede entrar dentro de la clase
+    ESTATICO: puede ser accedido sin necesidad de instanciar un objeto y el valor es estatico osea NO puede 
+        variar o ser modificado como una constante. Se usa con los otros, como public static o private static.
+    PROTEGIDO: protected, solo se puede entrar de la misma clase y tambien las clases que la heredan.
+
+
+
+PARA ACCEDER A RECURSOS
+
+    DENTRO DE LA MISMA CLASE Y QUE NO SON ESTATICOS
+        class Algo{
+            uso this con $
+
+            $this->atributo
+            $this->metodo()
+        }
+    
+    DENTRO DE LA MISMA CLASE Y SIENDO ESTATICO
+        class Algo {
+            Se operador de resolucion de ambito (::)
+
+
+            self::atributo_estatico_de_la_clase;
+            parent::atributo_estatico_de_la_clase_madre;
+
+            self::metodo_estatico_de_la_clase();
+            parent::metodo_estatico_de_la_clase_madre();
+        }
+
+
+    
+    FUERA DE LA CLASE, PUBLICO Y NO ESTATICO
+        $objeto = new Clase();
+        $objeto->atributo_publico;
+        $objeto->metodo_publico();
+
+
+    FUERA DE LA CLASE, PUBLICO Y ESTATICO. Como es estatico no hace falta instanciar la clase
+        Clase::atributo_publico;
+        Clase::metodo_publico();
+
+
+
+PARA DEFINIR CONSTANSTE EN PHP ES COMO TODOS LOS OTROS LENGUAJES, CON const, SIEMPRE VAN A SER PUBLICAS
+
+
+
+CONSTRUCTOR
+Se invoca automaicamente al instanciar un objeto. Se encarga de ejecutar cualquier inicializacion que el objeto
+necesite antes de ser invocado.
+
+class NombreClase {
+    function __construct(){
+
+    }
+}
+
+
+DESTRUCTOR
+En PHP no hay GARBAGE COLLECTOR asi que aca se usa el destructor para destruir el objeto y liberar memoria.
+
+class NombreClase {
+    function __destruct(){
+
+    }
+}
+
+
+LAS INTERFACE SON PARA HERENCIA MULTIPLE se defince con interface y se emplea con implements
+Las interfaces no pueden tener atributos, solo la DEFINICION de metodos publicos no el cuerpo
+
+interface Interface1 {
+    public function un_metodo_publico();
+}
+
+interface Interface2 {
+    public function otro_metodo_publico();
+}
+
+class NombreDeMiClase implements Interface1, Interface2{
+    esta clase implementa todos los metodos de interface invocados
+}
+
+La clase que implementa la interfaz tiene que usar TODOS sus metodos
+
+LAS INTERFACES SON CONJUNTO DE METODOS CARACETRISTICOS NO SON CLASES
+
+var_dump(objeto) permite analizar la estructura de un objeto, muestra por pantalla
+
+
+NO SE PUEDE RETORNAR ECHO, return echo no se puede, si quiero retornar un string algo print("texto")
+
+Para importar en PHP se usa require(Archivo) o include (archivo)
+La diferencia entre require e include a la hora de importar archivos es que include manda un warning y permite seguir
+ejecutando el script.
+require NO, cuando no encuetra un archivo manda un error fatal e interrumpe la ejecucion del script.
+
+Para imprimir el nombre de la clase con la funcion get_called_class()
+Con get_class(Objeto) saco el nombre de la clase a la que pertenece el objeto
+En php para calcular POTENCIAS se usa la funcion pow(numero,potencia)
+
+
+CREAR ARRAY A PARTIR DE STRING
+explode(delimitador, string) crea un arreglo en el que cada elemento va a ser el que esta separado
+por el delimitador
+
+count(arreglo) es como el length de javascript
+
+ARQUITECTURA DE SOFTWARE (NO CONFUNDIR CON CICLO DE VIDA DEL SISTEMA)
+    Forma en que se organizan los componentes de un sistema, interactuan y se relacionan entre si y con su contexto.
+
+    Aplicando normas y principios de diseño y calidad, que fortalezcan y formeten la usabilidad a la vez que dejan 
+    preparado el sistema, para su propia evolucion.
+
+    ETAPAS:
+        Requerimientos: toma de los mismos
+        Diseño: eleccion de tecnologias, herramientas y duracion del proyecto. Eleccion de patron de diseño.
+        Documentacion: documentar todo.
+        Evaluacion: papel critico, 
+
+PATRON DE DISEÑO
+    Soluciones efectivas de problemas comunes en el diseño de software.
+    Efectividad ya comprobada.
+    Es reusable.
+    Facilitan el aprendizaje de programadores inexpertos.
+
+PATRON MVC (Modelo Vista Controlador)
+    Las aplicaciones web son diferentes a los sitios web convencionales porque estas son capaces de crear una respuesta
+    dinamica.
+    Tienen tres aspectos a considerar en su desarrollo:
+        El codigo de inserccion, actualizacion, consulta y eliminacion de datos.
+        El codigo del diseño de las paginas a mostrar.
+        El codigo que controla el flujo de las paginas del a aplicacion.
+
+    ENTONCES:
+        *El MODELO va a representar la logica del negocio (manipulacion de datos). Se encarga del acceso a los datos
+            para hacer operaciones CRUD. CRUD es tambien persistencia de datos.
+
+        *Las VISTAS representan la presentacion de los datos (diseño de paginas). Se encarga de mostrar la informacion
+            al usuario (Interfaz de Usuario). En la vista solo se deben realizar operaciones SIMPLES.
+
+        *El CONTROLADOR representa el codigo de navegacion de la aplicacion (control de flujo). Tiene la funcion de
+            recibir y responder a los eventos, acciones del usuario. (Require y Response). Tiene que redirigir o
+            asignar la parte de logica de negocios a cada peticion. Debe tener un mecanismo para guardar
+            las correspondiencias entre peticiones y respuestas que se le asignan.
+
+    Se basa en la separacion de responsabilidades ya que cada una de las partes se encarga de un aspecto especifico
+    y no interfiere con el de otras.
+
+
+
+Para importar archivos en php se usa required.
+require_once significa que lo va a importar una unica vez no cada vez que recarguemos la aplicacion
+
+Los ORM (Object Relational Model) mapean una tabla de la base de datos en un clase para ser usado como objeto
+es lo que hacia en c#
+
+Con unset(objeto) destruyo elimino de memoria el objeto PERO YA NO SE HACE DENTRO DEL DESTRUCTOR
+A PARTIR DE PHP7 YA LO HACE AUTOMATICO
+
+La funcion array_pop(arreglo) quita el ultimo elemento de un arreglo
+array_push(arreglo,elemento) agrega al final un elemento
+
+ESTA LINEA ES PARA VER MEJOR LOS ERRORES DE CONEXION O CONSULTAS CUANDO HAYA UNO
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+FOREACH COMUN
+//foreach(Arreglo as valor); Del arreglo Arreglo extrae su valor
+
+FOREACH RELACIONAL
+//foreach(Arreglo as llave(campo) => valor); Del arreglo en su campo extrae su valor
+
+
+EJEMPLO DE ARRAY 
+//Creo el arreglo con los datos a insertar, es un arreglo porque la funcion create hice que reciba un arreglo
+//va a ser un arreglo asociativo, entre los parentesis defino el cuerpo del arreglo
+//a id status le pongo 0 porque es autoincremental
+$new_status = array(
+                    'id_status'=> 0,
+                    'status' => 'Otro status'
+                    );
+
+
+
+//IMPORTANTE
+            //VARIABLE VARIABLES, lo que hace es crear una nueva variable dinamica a partir de la primera, se hace con $$
+            //En este caso $key hace referencia a la posicion asociativa por ejemplo 'status_id' y $value a su valor
+            //al poner doble $ ($$key) lo que hace es crear una variable dinamicamente con el nombre que tiene $key osea $status_id 
+            //y a esa variable le asigna el valor de $value;
+            $$key = $value;
+
+
+
+********EL ARCHIVO .htaccess que hice en metflix ************************************************************************
+    El archivo lo que hace es configuraciones como prohibir el acceso a cualquiera que quiera meterse y tira un erro 403
+    para hacer eso dentro del acrhivo se escribe:
+        deny from all
+
+    Es indispensable para proteger carpetas
+
+    Tambien se usa para hacer URLS amigables escribiendo por ejemplo:
+        Options +FollowSymlinks
+        RewriteEngine On
+
+        RewriteBase /Curso%20POO%20PHP/Mexflix
+
+        RewriteCond %{SCRIPT_FILENAME} !-d
+        RewriteCond %{SCRIPT_FILENAME} !-f
+
+        RewriteRule ^(.*)$ index.php?r=$1 [L]
+****************************************************************************************************************************
+
+
+EL CONTROLADOR SE LO PUEDE DIVIDIR EN DOS PARTES, LA PARTE QUE CONECTA CON MODELO DE DATOS Y EL ENRUTADOR
+
+//Inicio una session, a partir de php 7 se pasa un arreglo con parametros, read an close cierra
+            //automaticamente la sesion cuando no existe o no se usa
+            session_start([
+                'use_only_cookies' => 1,
+                'auto_start' => 1,
+                'read_and_close' => true
+            ]);
+
+
+***************************************************************************************************************************
+The double arrow operator, =>, is used as an access mechanism for arrays. 
+This means that what is on the left side of it will have a corresponding value of what is on the right 
+side of it in array context. This can be used to set values of any acceptable type into a corresponding 
+index of an array. The index can be associative (string based) or numeric.
+
+    $myArray = array(
+        0 => 'Big',
+        1 => 'Small',
+        2 => 'Up',
+        3 => 'Down'
+    );
+
+The object operator, ->, is used in object scope to access methods and properties of an object. 
+It’s meaning is to say that what is on the right of the operator is a member of the object instantiated 
+into the variable on the left side of the operator. Instantiated is the key term here.
+
+// Create a new instance of MyObject into $obj
+$obj = new MyObject();
+// Set a property in the $obj object called thisProperty
+$obj->thisProperty = 'Fred';
+// Call a method of the $obj object named getProperty
+$obj->getProperty();
+******************************************************************************************************************************************
+
+La diferencia entre require e include a la hora de importar archivos es que include manda un warning y permite seguir
+ejecutando el script.
+require NO, cuando no encuetra un archivo manda un error fatal e interrumpe la ejecucion del script.
+CONVIENE REQUIRE
+Para validar que exista el archivo se usa la funcion file_exists(ruta con archivo)
+
+
+empty(arreglo) me dice si un arreglo viene vacio o no
+
+
+Hay que guardar toda la informacion necesaria en la variables de session
+Cuando se crean variables de sesion y se crea la sesion aunque pase de una ruta a otra
+esas variables se quedan en esa sesion y puedo accederlas en todas momentos sin necesidad
+de hacer otra consulta a la BD
+
+printf(texto, variable1, varable2 ...) reemplaza los comodines %s por las variables que le mande en el texto 
+en el orden que se envian
+
+
+Para destruir una sesion hago session_destroy():
+    session_start();
+    session_destroy();
+
+
+colspan = "2" en un th de un table o un td hace que ocupe DOS celdas de espacio
+
+El value de un input del tipo disabled no se puede pasar al backend
+
+Cuando un label for id de otra etiqueta se asocia a esa etiqueta lo que permite por ejemplo con radio, tocar
+el label y se activa el radio asociado, ejemplo:
+    <input type="radio" name="role" id="admin" value="Admin" required>
+    <label for="admin">Administrador</label>
+    <input type="radio" name="role" id="noadmin" value="User" required>
+    <label for="noadmin">Usuario</label>
